@@ -1,6 +1,6 @@
 const CONFIG = {
-  // Paste the deployed Google Apps Script /exec URL here when it is ready.
-  backendUrl: "",
+  // Deployed Google Apps Script web app used as the secure Groq proxy.
+  backendUrl: "https://script.google.com/macros/s/AKfycbyGx75yN21AqpM-uJUQNegNh02yiGMeWw7q_PymBGc_lzKntemH_CenoLGEEa03zOcpXw/exec",
   assistantName: "The Birthday Penguin",
   maxHistory: 10
 };
