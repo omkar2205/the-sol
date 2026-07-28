@@ -1,13 +1,8 @@
-panels.india = {
-  kicker: "India, briefly",
-  title: "One visit. Several foods.",
-  html: `<p>India visits completed: <strong>one</strong>.</p><p>Pani puri approval appears promising. The heavily promoted gulab jamun remains formally classified as <strong>mid</strong>.</p>`
-};
-
 const bypassVerification = document.getElementById("bypassVerification");
 if (bypassVerification) {
   bypassVerification.addEventListener("click", () => {
     const reaction = document.getElementById("verificationReaction");
+    experienceState.verificationStatus = "bypassed_by_boss";
     reaction.textContent = "Understood. Management privileges accepted.";
     playTone(520, 0.08);
     setTimeout(() => showScreen("world"), 450);
@@ -40,6 +35,7 @@ const petCat = document.getElementById("petCat");
 if (petCat) {
   petCat.addEventListener("click", event => {
     event.stopPropagation();
+    experienceState.catPets += 1;
     showCatReaction("Petting accepted. You may continue.", "♥  ♥", "petted", 340);
   });
 }
@@ -48,6 +44,7 @@ const feedCat = document.getElementById("feedCat");
 if (feedCat) {
   feedCat.addEventListener("click", event => {
     event.stopPropagation();
+    experienceState.catFeeds += 1;
     showCatReaction("Your offering has been reviewed and approved.", "🐟", "fed", 290);
   });
 }
