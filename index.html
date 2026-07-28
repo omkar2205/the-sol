@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="enhancements.css">
+  <link rel="stylesheet" href="ai.css">
 </head>
 <body>
   <div class="sky" aria-hidden="true">
@@ -171,7 +172,12 @@
         <button class="modal-close" data-close-chat aria-label="Close">×</button>
       </header>
       <div class="chat-log" id="chatLog" aria-live="polite">
-        <div class="chat-message assistant">Special delivery complete. I am now available for questions, complaints, and penguin-related consultation.</div>
+        <div class="chat-message assistant">Birthday Penguin online. Saule has executive authority; Omkar has been instructed to say yes ma’am.</div>
+      </div>
+      <div class="chat-prompts" aria-label="Suggested questions">
+        <button type="button" data-chat-prompt="Who is the boss here?">Who is the boss?</button>
+        <button type="button" data-chat-prompt="Give Omkar a short performance review.">Review Omkar</button>
+        <button type="button" data-chat-prompt="What are my official birthday orders?">Birthday orders</button>
       </div>
       <p class="chat-status" id="chatStatus"></p>
       <form class="chat-form" id="chatForm">
