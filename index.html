@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="enhancements.css">
 </head>
 <body>
   <div class="sky" aria-hidden="true">
@@ -21,9 +22,7 @@
   <main>
     <section class="screen delivery-screen active" id="deliveryScreen" aria-labelledby="deliveryTitle">
       <div class="delivery-copy">
-        <p class="eyebrow">Priority birthday post</p>
         <h1 id="deliveryTitle">Special delivery for<br><span>Saule Sulcaite</span></h1>
-        <p class="delivery-note">Delivered by bicycle. Approved by penguins. Supervised by cat.</p>
         <button class="primary-button" id="acceptDelivery">Accept the suspicious parcel</button>
       </div>
 
@@ -48,6 +47,7 @@
           <span class="progress-dot"></span>
         </div>
         <p class="verification-reaction" id="verificationReaction" aria-live="polite"></p>
+        <button class="boss-button" id="bypassVerification" type="button">I am the boss, I don’t answer questions</button>
       </div>
     </section>
 
@@ -182,5 +182,6 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="enhancements.js"></script>
 </body>
 </html>
