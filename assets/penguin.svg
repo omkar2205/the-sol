@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" role="img" aria-labelledby="title desc">
+  <title id="title">Birthday penguin</title>
+  <desc id="desc">A friendly illustrated penguin wearing a small amber bow tie.</desc>
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#23465f"/>
+      <stop offset="1" stop-color="#0d2236"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="275" rx="70" ry="15" fill="#17324d" opacity=".14"/>
+  <path d="M63 115C55 62 82 28 120 28s65 34 57 87c30 31 34 85 12 126-15 28-42 43-69 43s-54-15-69-43c-22-41-18-95 12-126Z" fill="url(#body)"/>
+  <ellipse cx="120" cy="173" rx="63" ry="85" fill="#fff8e8"/>
+  <path d="M67 122C44 140 33 167 36 196c2 18 10 28 21 24 12-4 17-23 20-46Z" fill="#17324d"/>
+  <path d="M173 122c23 18 34 45 31 74-2 18-10 28-21 24-12-4-17-23-20-46Z" fill="#17324d"/>
+  <circle cx="92" cy="91" r="10" fill="#fff"/>
+  <circle cx="148" cy="91" r="10" fill="#fff"/>
+  <circle cx="94" cy="93" r="4" fill="#0d2236"/>
+  <circle cx="146" cy="93" r="4" fill="#0d2236"/>
+  <path d="M105 109 120 98l15 11-15 12Z" fill="#edae49"/>
+  <path d="M99 143 120 157l21-14-7 27-14-10-14 10Z" fill="#bd6d52"/>
+  <path d="M104 144c-7-11-24-9-27 3-2 10 8 18 27 12Z" fill="#edae49"/>
+  <path d="M136 144c7-11 24-9 27 3 2 10-8 18-27 12Z" fill="#edae49"/>
+  <path d="M75 264c-17 0-28 9-29 19 17 3 34 2 51-5Z" fill="#edae49"/>
+  <path d="M165 264c17 0 28 9 29 19-17 3-34 2-51-5Z" fill="#edae49"/>
+</svg>
