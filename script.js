@@ -21,7 +21,6 @@ const experienceState = {
   catPets: 0,
   catFeeds: 0,
   chatOpened: 0,
-  soundEnabled: false,
   finalParcelOpened: false
 };
 
@@ -64,7 +63,7 @@ const panels = {
       <div class="committee-item"><strong>Fernando Alonso</strong><br>Drives enough for Saule and several other people.</div>
       <div class="committee-item"><strong>Benito Mussolini</strong><br>Removed from the birthday group chat.</div>
       <div class="committee-item"><strong>Bhavana</strong><br>Omkar’s friend’s girlfriend, whose existence he regularly forgets.</div>
-      <div class="committee-item"><strong>Saule Sulcaite</strong><br>Clearly the best result of the date.</div>
+      <div class="committee-item"><strong>Saule Sulcaite 👑</strong><br>Clearly the best result of the date.</div>
     </div>`
   },
   keys: {
@@ -80,22 +79,21 @@ const panels = {
   bike: {
     kicker: "Preferred transport",
     title: "Two wheels, no problem",
-    html: `<p>Books secured. Penguin balanced. Cat refusing to cooperate. The bicycle journey may now begin.</p>`
+    html: `<p>Books secured. Penguin balanced. Karantin refusing to cooperate. The bicycle journey may now begin.</p>`
   }
 };
 
 const catLines = [
-  "She sent ‘hi’ without context again, didn’t she?",
-  "The laptop could be restarted. Theoretically.",
-  "I have reviewed the birthday arrangements. Adequate.",
-  "The penguin thinks it is in charge. Adorable.",
-  "No car. I checked."
+  "Karantin has reviewed the ominous ‘hi’. Omkar’s risk level remains unacceptable.",
+  "The laptop could be restarted. Karantin has declined to intervene.",
+  "Karantin has reviewed the birthday arrangements. Adequate.",
+  "The penguin thinks it is in charge. Karantin finds this adorable.",
+  "No car. Karantin checked."
 ];
 
 let questionIndex = 0;
 let chatHistory = [];
 let catLineIndex = 0;
-let soundEnabled = false;
 let chatBusy = false;
 const sessionId = createSessionId();
 
@@ -118,7 +116,6 @@ function buildExperienceContext() {
     catPets: experienceState.catPets,
     catFeeds: experienceState.catFeeds,
     chatOpened: experienceState.chatOpened,
-    soundEnabled: experienceState.soundEnabled,
     finalParcelOpened: experienceState.finalParcelOpened
   };
 }
@@ -138,6 +135,7 @@ function showScreen(name) {
 function renderQuestion() {
   const questionArea = document.getElementById("questionArea");
   const item = questions[questionIndex];
+
   questionArea.innerHTML = `
     <p class="question-number">Question ${questionIndex + 1} of ${questions.length}</p>
     <p class="question-title">${item.question}</p>
@@ -164,14 +162,12 @@ function checkAnswer(answerIndex, button) {
     void button.offsetWidth;
     button.classList.add("wrong");
     reaction.textContent = "The penguin looks unconvinced. Try again.";
-    playTone(180, 0.08);
     return;
   }
 
   experienceState.correctAnswers += 1;
   button.classList.add("correct");
   reaction.textContent = item.reaction;
-  playTone(520, 0.08);
 
   setTimeout(() => {
     questionIndex += 1;
@@ -194,7 +190,6 @@ function openInfoPanel(key) {
   document.getElementById("modalTitle").textContent = panel.title;
   document.getElementById("modalContent").innerHTML = panel.html;
   setModalState("infoModal", true);
-  playTone(360, 0.05);
 }
 
 function setModalState(id, open) {
@@ -211,7 +206,6 @@ function showCatLine() {
   bubble.textContent = catLines[catLineIndex % catLines.length];
   catLineIndex += 1;
   bubble.classList.add("show");
-  playTone(250, 0.04);
   clearTimeout(showCatLine.timeout);
   showCatLine.timeout = setTimeout(() => bubble.classList.remove("show"), 3500);
 }
@@ -278,24 +272,6 @@ async function sendChatMessage(text) {
   status.textContent = "";
   setChatBusyState(false);
   input.focus();
-  playTone(440, 0.05);
-}
-
-function playTone(frequency, duration) {
-  if (!soundEnabled) return;
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-  const context = playTone.context || (playTone.context = new AudioContext());
-  const oscillator = context.createOscillator();
-  const gain = context.createGain();
-  oscillator.frequency.value = frequency;
-  oscillator.type = "sine";
-  gain.gain.setValueAtTime(0.045, context.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + duration);
-  oscillator.connect(gain);
-  gain.connect(context.destination);
-  oscillator.start();
-  oscillator.stop(context.currentTime + duration);
 }
 
 document.getElementById("acceptDelivery").addEventListener("click", () => {
@@ -337,17 +313,8 @@ document.querySelectorAll("[data-chat-prompt]").forEach(button => {
   button.addEventListener("click", () => sendChatMessage(button.dataset.chatPrompt));
 });
 
-document.getElementById("soundToggle").addEventListener("click", event => {
-  soundEnabled = !soundEnabled;
-  experienceState.soundEnabled = soundEnabled;
-  event.currentTarget.setAttribute("aria-pressed", String(soundEnabled));
-  event.currentTarget.textContent = soundEnabled ? "Sound on" : "Sound off";
-  playTone(620, 0.08);
-});
-
 document.getElementById("finalParcel").addEventListener("click", () => {
   experienceState.finalParcelOpened = true;
-  playTone(660, 0.12);
   showScreen("final");
 });
 
