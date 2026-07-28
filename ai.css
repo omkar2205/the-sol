@@ -1,0 +1,46 @@
+.chat-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 18px 4px;
+  background: #f8f5ec;
+}
+
+.chat-prompts button {
+  border: 1px solid rgba(23,50,77,.16);
+  border-radius: 999px;
+  background: rgba(255,255,255,.9);
+  color: var(--navy);
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .18s, background .18s, opacity .18s;
+}
+
+.chat-prompts button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: var(--cream);
+}
+
+.chat-prompts button:disabled {
+  cursor: wait;
+  opacity: .5;
+}
+
+.chat-form button:disabled,
+.chat-form input:disabled {
+  opacity: .58;
+  cursor: wait;
+}
+
+@media (max-width: 620px) {
+  .chat-prompts {
+    padding: 10px 14px 2px;
+  }
+
+  .chat-prompts button {
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+}
