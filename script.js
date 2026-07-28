@@ -2,7 +2,7 @@ const CONFIG = {
   // Deployed Google Apps Script web app used as the secure Groq proxy.
   backendUrl: "https://script.google.com/macros/s/AKfycbyGx75yN21AqpM-uJUQNegNh02yiGMeWw7q_PymBGc_lzKntemH_CenoLGEEa03zOcpXw/exec",
   assistantName: "The Birthday Penguin",
-  maxHistory: 10
+  maxHistory: 12
 };
 
 const screens = {
@@ -10,6 +10,19 @@ const screens = {
   verification: document.getElementById("verificationScreen"),
   world: document.getElementById("worldScreen"),
   final: document.getElementById("finalScreen")
+};
+
+const experienceState = {
+  verificationStatus: "not_started",
+  correctAnswers: 0,
+  wrongAnswers: 0,
+  openedPanels: [],
+  catComments: 0,
+  catPets: 0,
+  catFeeds: 0,
+  chatOpened: 0,
+  soundEnabled: false,
+  finalParcelOpened: false
 };
 
 const questions = [
@@ -27,7 +40,7 @@ const questions = [
   },
   {
     question: "How do you give Omkar a heart attack?",
-    answers: ["Stare at him", "Send him “hi” without context", "Both of the above"],
+    answers: ["Stare at him", "Send him ‘hi’ without context", "Both of the above"],
     correct: 2,
     reaction: "Identity confirmed. This is definitely Saule."
   }
@@ -59,10 +72,10 @@ const panels = {
     title: "Car keys detected",
     html: `<p>Thank you, but no. A bicycle has already been arranged.</p>`
   },
-  food: {
+  india: {
     kicker: "India, briefly",
     title: "One visit. Several foods.",
-    html: `<p>Pani puri approval appears promising.</p><p>The heavily promoted gulab jamun, however, has been formally classified as <strong>mid</strong>.</p>`
+    html: `<p>India visits completed: <strong>one</strong>.</p><p>Pani puri approval appears promising. The heavily promoted gulab jamun remains formally classified as <strong>mid</strong>.</p>`
   },
   bike: {
     kicker: "Preferred transport",
@@ -83,15 +96,37 @@ let questionIndex = 0;
 let chatHistory = [];
 let catLineIndex = 0;
 let soundEnabled = false;
+let chatBusy = false;
 const sessionId = createSessionId();
 
 function createSessionId() {
   if (window.crypto?.getRandomValues) {
     const bytes = new Uint8Array(12);
     window.crypto.getRandomValues(bytes);
-    return Array.from(bytes, b => b.toString(16).padStart(2, "0")).join("");
+    return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
   }
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function buildExperienceContext() {
+  return {
+    verificationStatus: experienceState.verificationStatus,
+    correctAnswers: experienceState.correctAnswers,
+    wrongAnswers: experienceState.wrongAnswers,
+    openedPanels: [...experienceState.openedPanels],
+    catComments: experienceState.catComments,
+    catPets: experienceState.catPets,
+    catFeeds: experienceState.catFeeds,
+    chatOpened: experienceState.chatOpened,
+    soundEnabled: experienceState.soundEnabled,
+    finalParcelOpened: experienceState.finalParcelOpened
+  };
+}
+
+function recordPanelOpen(key) {
+  if (!experienceState.openedPanels.includes(key)) {
+    experienceState.openedPanels.push(key);
+  }
 }
 
 function showScreen(name) {
@@ -124,6 +159,7 @@ function checkAnswer(answerIndex, button) {
   const reaction = document.getElementById("verificationReaction");
 
   if (answerIndex !== item.correct) {
+    experienceState.wrongAnswers += 1;
     button.classList.remove("wrong");
     void button.offsetWidth;
     button.classList.add("wrong");
@@ -132,6 +168,7 @@ function checkAnswer(answerIndex, button) {
     return;
   }
 
+  experienceState.correctAnswers += 1;
   button.classList.add("correct");
   reaction.textContent = item.reaction;
   playTone(520, 0.08);
@@ -142,6 +179,7 @@ function checkAnswer(answerIndex, button) {
       renderQuestion();
       reaction.textContent = "";
     } else {
+      experienceState.verificationStatus = "completed";
       showScreen("world");
     }
   }, 900);
@@ -151,6 +189,7 @@ function openInfoPanel(key) {
   const panel = panels[key];
   if (!panel) return;
 
+  recordPanelOpen(key);
   document.getElementById("modalKicker").textContent = panel.kicker;
   document.getElementById("modalTitle").textContent = panel.title;
   document.getElementById("modalContent").innerHTML = panel.html;
@@ -160,6 +199,7 @@ function openInfoPanel(key) {
 
 function setModalState(id, open) {
   const modal = document.getElementById(id);
+  if (!modal) return;
   modal.classList.toggle("open", open);
   modal.setAttribute("aria-hidden", String(!open));
   document.body.style.overflow = open ? "hidden" : "";
@@ -167,6 +207,7 @@ function setModalState(id, open) {
 
 function showCatLine() {
   const bubble = document.getElementById("catBubble");
+  experienceState.catComments += 1;
   bubble.textContent = catLines[catLineIndex % catLines.length];
   catLineIndex += 1;
   bubble.classList.add("show");
@@ -184,26 +225,41 @@ function addChatMessage(role, text) {
   log.scrollTop = log.scrollHeight;
 }
 
+function setChatBusyState(isBusy) {
+  chatBusy = isBusy;
+  const input = document.getElementById("chatInput");
+  const submit = document.querySelector("#chatForm button[type='submit']");
+  input.disabled = isBusy;
+  submit.disabled = isBusy;
+  document.querySelectorAll("[data-chat-prompt]").forEach(button => {
+    button.disabled = isBusy;
+  });
+}
+
 async function sendChatMessage(text) {
+  if (!text || chatBusy) return;
+
   const status = document.getElementById("chatStatus");
   const input = document.getElementById("chatInput");
-  const submit = document.querySelector("#chatForm button");
 
   addChatMessage("user", text);
   chatHistory.push({ role: "user", content: text });
   chatHistory = chatHistory.slice(-CONFIG.maxHistory);
-  input.disabled = true;
-  submit.disabled = true;
-  status.textContent = "The penguin is considering this very seriously…";
+  setChatBusyState(true);
+  status.textContent = "The penguin is preparing an unnecessarily official response…";
 
-  let reply = "The backend has not been connected yet. Omkar still needs to add the Apps Script /exec URL, yes ma’am.";
+  let reply = "The birthday assistant is not connected yet. This is an unacceptable administrative situation.";
 
   if (CONFIG.backendUrl) {
     try {
       const response = await fetch(CONFIG.backendUrl, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ sessionId, messages: chatHistory })
+        body: JSON.stringify({
+          sessionId,
+          messages: chatHistory,
+          context: buildExperienceContext()
+        })
       });
 
       if (!response.ok) throw new Error(`Backend returned ${response.status}`);
@@ -212,7 +268,7 @@ async function sendChatMessage(text) {
       reply = String(data.reply).trim();
     } catch (error) {
       console.error("Birthday penguin request failed:", error);
-      reply = "The penguin has encountered a technical problem and is blaming the laptop restart schedule.";
+      reply = "A technical incident has occurred. The laptop restart schedule is now the leading suspect.";
     }
   }
 
@@ -220,8 +276,7 @@ async function sendChatMessage(text) {
   chatHistory = chatHistory.slice(-CONFIG.maxHistory);
   addChatMessage("assistant", reply);
   status.textContent = "";
-  input.disabled = false;
-  submit.disabled = false;
+  setChatBusyState(false);
   input.focus();
   playTone(440, 0.05);
 }
@@ -244,6 +299,7 @@ function playTone(frequency, duration) {
 }
 
 document.getElementById("acceptDelivery").addEventListener("click", () => {
+  experienceState.verificationStatus = "in_progress";
   showScreen("verification");
   renderQuestion();
 });
@@ -259,6 +315,7 @@ document.querySelectorAll("[data-close-modal]").forEach(button => {
 document.getElementById("catButton").addEventListener("click", showCatLine);
 
 document.getElementById("penguinButton").addEventListener("click", () => {
+  experienceState.chatOpened += 1;
   setModalState("chatModal", true);
   document.getElementById("chatInput").focus();
 });
@@ -276,14 +333,20 @@ document.getElementById("chatForm").addEventListener("submit", event => {
   sendChatMessage(text);
 });
 
+document.querySelectorAll("[data-chat-prompt]").forEach(button => {
+  button.addEventListener("click", () => sendChatMessage(button.dataset.chatPrompt));
+});
+
 document.getElementById("soundToggle").addEventListener("click", event => {
   soundEnabled = !soundEnabled;
+  experienceState.soundEnabled = soundEnabled;
   event.currentTarget.setAttribute("aria-pressed", String(soundEnabled));
   event.currentTarget.textContent = soundEnabled ? "Sound on" : "Sound off";
   playTone(620, 0.08);
 });
 
 document.getElementById("finalParcel").addEventListener("click", () => {
+  experienceState.finalParcelOpened = true;
   playTone(660, 0.12);
   showScreen("final");
 });
