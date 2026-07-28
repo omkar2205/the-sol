@@ -50,7 +50,7 @@ const panels = {
     html: `<div class="committee-list">
       <div class="committee-item"><strong>Fernando Alonso</strong><br>Drives enough for Saule and several other people.</div>
       <div class="committee-item"><strong>Benito Mussolini</strong><br>Removed from the birthday group chat.</div>
-      <div class="committee-item"><strong>Dag Hammarskjöld</strong><br>Providing respectable diplomatic representation.</div>
+      <div class="committee-item"><strong>Bhavana</strong><br>Omkar’s friend’s girlfriend, whose existence he regularly forgets.</div>
       <div class="committee-item"><strong>Saule Sulcaite</strong><br>Clearly the best result of the date.</div>
     </div>`
   },
