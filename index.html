@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17324d">
+  <meta name="description" content="A very important birthday delivery for Saule Sulcaite.">
+  <title>A Birthday Delivery for Saule</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <span class="cloud cloud-one"></span>
+    <span class="cloud cloud-two"></span>
+    <span class="cloud cloud-three"></span>
+  </div>
+
+  <main>
+    <section class="screen delivery-screen active" id="deliveryScreen" aria-labelledby="deliveryTitle">
+      <div class="delivery-copy">
+        <p class="eyebrow">Priority birthday post</p>
+        <h1 id="deliveryTitle">Special delivery for<br><span>Saule Sulcaite</span></h1>
+        <p class="delivery-note">Delivered by bicycle. Approved by penguins. Supervised by cat.</p>
+        <button class="primary-button" id="acceptDelivery">Accept the suspicious parcel</button>
+      </div>
+
+      <div class="delivery-art" aria-hidden="true">
+        <div class="road-shadow"></div>
+        <img class="delivery-bike" src="assets/bicycle.svg" alt="">
+        <img class="delivery-penguin" src="assets/penguin.svg" alt="">
+        <img class="delivery-cat" src="assets/cat.svg" alt="">
+        <div class="parcel parcel-small"><span>FOR SAULE</span></div>
+      </div>
+    </section>
+
+    <section class="screen verification-screen" id="verificationScreen" aria-labelledby="verificationTitle">
+      <div class="paper-card verification-card">
+        <div class="verification-stamp">SS</div>
+        <p class="eyebrow">Official recipient check</p>
+        <h2 id="verificationTitle">Only the real Saule will pass.</h2>
+        <div id="questionArea"></div>
+        <div class="verification-progress" aria-label="Verification progress">
+          <span class="progress-dot active"></span>
+          <span class="progress-dot"></span>
+          <span class="progress-dot"></span>
+        </div>
+        <p class="verification-reaction" id="verificationReaction" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="screen world-screen" id="worldScreen" aria-labelledby="worldTitle">
+      <header class="world-header">
+        <div>
+          <p class="eyebrow">Recipient verified</p>
+          <h2 id="worldTitle">Welcome to Saule's little world</h2>
+        </div>
+        <button class="sound-button" id="soundToggle" aria-pressed="false" title="Toggle sound">Sound off</button>
+      </header>
+
+      <div class="world-stage" id="worldStage">
+        <div class="sun-glow" aria-hidden="true"></div>
+        <div class="floor" aria-hidden="true"></div>
+
+        <button class="world-object bookshelf-object" data-panel="books" aria-label="Open the bookshelf">
+          <span class="bookshelf">
+            <span class="shelf shelf-a"><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="shelf shelf-b"><i></i><i></i><i></i><i></i></span>
+            <span class="shelf shelf-c"><i></i><i></i><i></i><i></i><i></i></span>
+          </span>
+          <span class="object-label">Books</span>
+        </button>
+
+        <button class="world-object laptop-object" data-panel="laptop" aria-label="Open the laptop joke">
+          <span class="laptop-screen"><span class="restart-symbol">↻</span></span>
+          <span class="laptop-base"></span>
+          <span class="object-label">Laptop</span>
+        </button>
+
+        <button class="world-object calendar-object" data-panel="calendar" aria-label="Open 29 July birthday committee">
+          <span class="calendar-top">JULY</span>
+          <strong>29</strong>
+          <span class="object-label">Birthday committee</span>
+        </button>
+
+        <button class="world-object keys-object" data-panel="keys" aria-label="Open car keys joke">
+          <span class="key-ring">○</span><span class="key-shaft">━━━━</span>
+          <span class="object-label">Car keys</span>
+        </button>
+
+        <button class="world-object food-object" data-panel="food" aria-label="Open Indian food note">
+          <span class="food-bowl"><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="object-label">Indian food</span>
+        </button>
+
+        <button class="world-object bike-object" data-panel="bike" aria-label="Open bicycle note">
+          <img src="assets/bicycle.svg" alt="">
+          <span class="object-label">Bicycle</span>
+        </button>
+
+        <button class="world-object cat-object" id="catButton" aria-label="Ask the cat for a comment">
+          <img src="assets/cat.svg" alt="A cat sitting and watching">
+          <span class="speech-bubble cat-bubble" id="catBubble">...</span>
+        </button>
+
+        <button class="world-object penguin-object" id="penguinButton" aria-label="Talk to the birthday penguin">
+          <img src="assets/penguin.svg" alt="A friendly penguin">
+          <span class="speech-bubble">Talk to me</span>
+        </button>
+
+        <button class="parcel final-parcel" id="finalParcel" aria-label="Open Saule's birthday parcel">
+          <span class="parcel-ribbon"></span>
+          <span class="parcel-tag">For Saule</span>
+        </button>
+
+        <p class="world-hint">Tap around. The penguin insists everything here is important.</p>
+      </div>
+    </section>
+
+    <section class="screen final-screen" id="finalScreen" aria-labelledby="finalTitle">
+      <div class="final-stars" aria-hidden="true"></div>
+      <div class="final-card">
+        <img src="assets/penguin.svg" alt="" class="final-penguin">
+        <img src="assets/cat.svg" alt="" class="final-cat">
+        <p class="eyebrow">29 July</p>
+        <h2 id="finalTitle">Happy Birthday, Saule!</h2>
+        <p>You are genuinely one of the kindest, sweetest and quirkiest people I know.</p>
+        <p class="yes-maam">Yes ma’am.</p>
+        <p class="signature">— Omkar</p>
+        <button class="secondary-button" id="replayButton">Deliver it again</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="infoModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" data-close-modal aria-label="Close">×</button>
+      <p class="modal-kicker" id="modalKicker"></p>
+      <h3 id="modalTitle"></h3>
+      <div class="modal-content" id="modalContent"></div>
+    </article>
+  </div>
+
+  <div class="modal" id="chatModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-chat></div>
+    <section class="chat-card" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+      <header class="chat-header">
+        <img src="assets/penguin.svg" alt="">
+        <div>
+          <p class="modal-kicker">Groq-powered assistance</p>
+          <h3 id="chatTitle">The Birthday Penguin</h3>
+        </div>
+        <button class="modal-close" data-close-chat aria-label="Close">×</button>
+      </header>
+      <div class="chat-log" id="chatLog" aria-live="polite">
+        <div class="chat-message assistant">Special delivery complete. I am now available for questions, complaints, and penguin-related consultation.</div>
+      </div>
+      <p class="chat-status" id="chatStatus"></p>
+      <form class="chat-form" id="chatForm">
+        <input id="chatInput" maxlength="500" autocomplete="off" placeholder="Ask the penguin something…" aria-label="Message the birthday penguin">
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
