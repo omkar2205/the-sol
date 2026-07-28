@@ -34,6 +34,26 @@
   cursor: wait;
 }
 
+.karantin-name {
+  position: absolute;
+  right: 17px;
+  bottom: 31px;
+  z-index: 2;
+  min-width: 96px;
+  padding: 5px 12px;
+  border: 1px solid rgba(23,50,77,.14);
+  border-radius: 999px;
+  background: rgba(255,253,246,.94);
+  color: var(--navy);
+  box-shadow: 0 5px 12px rgba(23,50,77,.1);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
 @media (max-width: 620px) {
   .chat-prompts {
     padding: 10px 14px 2px;
@@ -42,5 +62,13 @@
   .chat-prompts button {
     font-size: 11px;
     padding: 7px 10px;
+  }
+
+  .karantin-name {
+    right: 3px;
+    bottom: 29px;
+    min-width: 78px;
+    padding: 4px 9px;
+    font-size: 9px;
   }
 }
