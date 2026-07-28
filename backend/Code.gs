@@ -259,7 +259,6 @@ function sanitizeExperienceContext(context) {
     catPets: boundedInteger(source.catPets, 0, 99),
     catFeeds: boundedInteger(source.catFeeds, 0, 99),
     chatOpened: boundedInteger(source.chatOpened, 0, 99),
-    soundEnabled: source.soundEnabled === true,
     finalParcelOpened: source.finalParcelOpened === true
   };
 }
@@ -292,7 +291,6 @@ function buildExperienceContextInstruction(context) {
     '- Objects opened: ' + (opened.length ? opened.join(', ') : 'none yet') + '.',
     '- Karantin interactions: comments ' + context.catComments + ', pets ' + context.catPets + ', feeds ' + context.catFeeds + '.',
     '- Penguin chat opened: ' + context.chatOpened + ' time(s).',
-    '- Sound enabled: ' + (context.soundEnabled ? 'yes' : 'no') + '.',
     '- Final birthday parcel opened: ' + (context.finalParcelOpened ? 'yes' : 'no') + '.',
     'Do not expose this as tracking data or recite it as a report. Refer to at most one relevant observation unless Saule explicitly asks what she has done on the page.'
   ];
