@@ -86,13 +86,22 @@
         </button>
 
         <button class="world-object keys-object" data-panel="keys" aria-label="Open car keys joke">
-          <span class="key-ring">○</span><span class="key-shaft">━━━━</span>
+          <span class="car-key" aria-hidden="true">
+            <span class="key-ring"></span>
+            <span class="key-fob"><i></i><i></i></span>
+            <span class="key-blade"><i></i></span>
+          </span>
           <span class="object-label">Car keys</span>
         </button>
 
-        <button class="world-object food-object" data-panel="food" aria-label="Open Indian food note">
-          <span class="food-bowl"><i></i><i></i><i></i><i></i><i></i></span>
-          <span class="object-label">Indian food</span>
+        <button class="world-object india-object" data-panel="india" aria-label="Open India note">
+          <span class="india-flag" aria-hidden="true">
+            <i class="flag-saffron"></i>
+            <i class="flag-white"><b class="flag-chakra"></b></i>
+            <i class="flag-green"></i>
+          </span>
+          <span class="flag-pole" aria-hidden="true"></span>
+          <span class="object-label">India</span>
         </button>
 
         <button class="world-object bike-object" data-panel="bike" aria-label="Open bicycle note">
@@ -100,10 +109,17 @@
           <span class="object-label">Bicycle</span>
         </button>
 
-        <button class="world-object cat-object" id="catButton" aria-label="Ask the cat for a comment">
-          <img src="assets/cat.svg" alt="A cat sitting and watching">
-          <span class="speech-bubble cat-bubble" id="catBubble">...</span>
-        </button>
+        <div class="world-object cat-object" id="catArea">
+          <button class="cat-figure" id="catButton" aria-label="Ask the cat for a comment">
+            <img src="assets/cat.svg" alt="A black cat sitting and watching">
+            <span class="speech-bubble cat-bubble" id="catBubble">...</span>
+          </button>
+          <div class="cat-actions" aria-label="Cat interactions">
+            <button id="petCat" type="button">Pet</button>
+            <button id="feedCat" type="button">Feed</button>
+          </div>
+          <span class="cat-effect" id="catEffect" aria-hidden="true"></span>
+        </div>
 
         <button class="world-object penguin-object" id="penguinButton" aria-label="Talk to the birthday penguin">
           <img src="assets/penguin.svg" alt="A friendly penguin">
@@ -150,7 +166,6 @@
       <header class="chat-header">
         <img src="assets/penguin.svg" alt="">
         <div>
-          <p class="modal-kicker">Groq-powered assistance</p>
           <h3 id="chatTitle">The Birthday Penguin</h3>
         </div>
         <button class="modal-close" data-close-chat aria-label="Close">×</button>
